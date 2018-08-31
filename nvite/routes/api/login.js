@@ -3,7 +3,7 @@ const userLoginController = require("../../controller/loginController");
 
 // Matches with "/api/imagePath"
 router.route("/auth")
-  .post(userLoginController.getLoginInfoRequest);
+  .post(userLoginController.postLoginInfoRequest);
 
 router
   .route("/:id")

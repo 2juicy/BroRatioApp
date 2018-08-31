@@ -8,6 +8,21 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const busboy = require('connect-busboy');
 const db = require("./models");
+const fs = require('fs');
+
+//https
+var key = fs.readFileSync('./selfsigned.key');
+var cert = fs.readFileSync( './selfsigned.crt' );
+//var ca = fs.readFileSync( './mydomain.csr' );
+
+//
+var options = {
+  key: key,
+  cert: cert
+  };
+
+var https = require('https');
+
 
 
 // Set up promises with mongoose
@@ -67,7 +82,7 @@ app.post('/api/login/signAuth', (req, res, next) => {
     };
 
     console.log("I reach here")
-    db.userRecord.create(userRecordObject);
+    db.userRecord.create(userRecordObject,{unique: true});
    
     console.log("I reach here")
     db.userMeta.create(imageArr)
@@ -104,9 +119,15 @@ app.get("/populated", function(req, res) {
 require("./routes/api/imagePath.js")(app);
 app.use(routes);
 
+// Send every other request to the React app
+// Define any API routes before this runs
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
+// // Start the API server
+// app.listen(PORT, () =>
+//   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`)
+// );
 
-// Start the API server
-app.listen(PORT, () =>
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`)
-);
+https.createServer(options, app).listen(6969);

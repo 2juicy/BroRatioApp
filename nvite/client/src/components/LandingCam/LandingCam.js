@@ -13,8 +13,8 @@ class WebcamCapture extends React.Component {
     female: 0,
     mood: null,
     message: null,
-    ageLow: 0,
-    ageHigh: 0,
+    ageLow: "",
+    ageHigh: "",
     url: ""
   };
 
@@ -43,19 +43,66 @@ class WebcamCapture extends React.Component {
     axios
       .post("./api/userInfo/analyze", { imageEncoded: imageSrc })
       .then(response => {
-        console.log(response.data);
         this.setState({
           disable: false,
-          male: response.data.maleCount,
-          female: response.data.femaleCount,
+          male: response.data.maleCount ? response.data.maleCount: 0,
+          female: response.data.femaleCount ? response.data.femaleCount:0,
           message: "Analysis complete! Take another photo..."
         });
-        if (response.data.malesObject.length > 0) {
+
+        if(response.data.maleCount > 0 ||response.data.femaleCount > 0 )
+        if (response.data.malesObject.length > 0 || response.data.femaleObject.length > 0 ) {
           try {
+            //Get the male info
+            var malesAgeLow = "Not Detected"
+            var malesAgeHigh = "Not Detected"
+            var malesMood = "Not Detected"
+          
+            //Get femal info
+            var femalesAgeLow = "Not Detected"
+            var femalesAgeHigh = "Not Detected"
+            var femalesMood = "Not Detected"
+          
+            //
+            var maleDetect = response.data.malesObject.length > 0 ? true: false;
+            var femaleDetect = response.data.femalesObject.length > 0 ? true: false;
+
+            if(maleDetect)
+            {
+              malesAgeLow = "";
+              malesAgeHigh = "";
+              malesMood = "";
+              var counter = 0;
+              response.data.malesObject.forEach(element=>{
+                malesAgeLow += element.AgeRange.Low + " ";
+                malesAgeHigh += element.AgeRange.High + " ";
+                malesMood += JSON.stringify(element.Emotions) + " ";
+              })        
+            }
+
+
+            if(femaleDetect)
+            {
+              femalesAgeLow = "";
+              femalesAgeHigh = "";
+              femalesMood = "";
+              response.data.femalesObject.forEach(element=>{
+                femalesAgeLow += element.AgeRange.Low + " ";
+                femalesAgeHigh += element.AgeRange.High + " ";
+                femalesMood += JSON.stringify(element.Emotions) + " ";
+              })
+            }
+
+
             this.setState({
-              ageLow: response.data.malesObject[0].AgeRange.Low,
-              ageHigh: response.data.malesObject[0].AgeRange.High,
-              mood: response.data.malesObject[0].Emotions[0].Type,
+              ageLow: " Males " +  malesAgeLow   
+                      +" Females " + femalesAgeHigh  ,
+              ageHigh: " Male " + malesAgeHigh 
+                      +" Female " +  femalesAgeHigh 
+              
+              ,
+              mood: " Males "+ malesMood 
+                    +" Females " +femalesMood ,
               url: "/images/imageMainuser-random.png?" + Date.toString()
             });
             var c = document.getElementById("canvas");
@@ -126,7 +173,8 @@ class WebcamCapture extends React.Component {
             <span>|</span>
             <span>Female: {this.state.female}</span>
           </p>
-          <p className="mood">Mood: {this.state.mood}</p>
+          <br></br>
+          <p className="mood">Mood: {this.state.mood}</p><br></br><br></br>
           <p className="age">
             <span>Age Range: {this.state.ageLow}</span>
             <span> - </span>

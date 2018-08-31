@@ -10,14 +10,7 @@
  #### ** Ages
 
 #### "Main Page"
-![Screenshot](backend.jpg)
-
-#### "Login Page"
-![Screenshot](backend2.jpeg)
-
-#### "Save"
-![Screenshot](save.jpg)
-
+![Screenshot](https://i.imgur.com/iCneHAn.jpg)
 
 # Full Concept: 
 #### Dating app based on pictures and associated based on what people chose to share at different locations, hoping to mock this after
@@ -27,5 +20,5 @@
 * [Material-UI](https://material-ui.com/) is an open-source project that features React components that implement Google's Material Design.
 
 # Hosting DB and Server
-#### Digital Ocean
+[DigitalOcean](https://178.128.71.104/)
 

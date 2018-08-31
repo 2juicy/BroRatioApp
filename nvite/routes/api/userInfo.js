@@ -11,8 +11,4 @@ router.route('/loginAuth')
   
 
 
-router
-  .route("/:id")
-  //.get(imgController.findById)
-
 module.exports = router;

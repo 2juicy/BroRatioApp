@@ -24,6 +24,7 @@ function awsCompareFaces(imageIn, imageServer) {
         }
     };
 
+    console.log("Im in the aws method")
     var requestFace = faceDetection.compareFaces(param)
     var promiseFace = requestFace.promise();
 
@@ -52,7 +53,7 @@ function awsCompareFaces(imageIn, imageServer) {
             }
               
             }).catch(function(err){
-                return imageResult;
+                return err;
             })
 }
 
@@ -72,7 +73,7 @@ module.exports = {
 
             console.log(req.body.username);
             db.userRecord.findOne({ username: req.body.username }).then((data) => {
-                console.log(data);
+                console.log("im here" + data);
                 var length = data.profileImages;
                 var nLength = Object.keys(JSON.parse(JSON.stringify(length))[0]).length;
                 // console.log(JSON.parse(JSON.stringify(length))[0]['img1'])
@@ -104,7 +105,7 @@ module.exports = {
                            
                         }
                     ).catch((err) => { 
-                        console.log(err) ;
+                        console.log("error"+err) ;
                         var ResponseLogin = {
                             user: req.body.username,
                             loginStatus: false
