@@ -79,7 +79,7 @@ class StartCam extends React.Component {
           height={470}
           ref={this.setRef}
           screenshotFormat="image/png"
-          width={600}
+          width={"100%"}
           style={{ borderRadius: "800px" }}
           videoConstraints={videoConstraints}
           gutterBottom

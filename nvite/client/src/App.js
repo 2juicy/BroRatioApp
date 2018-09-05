@@ -9,6 +9,7 @@ import { deepOrange, indigo } from "@material-ui/core/colors";
 import Landing from "./pages/Landing/Landing";
 import Uploader from "./pages/Uploader/dropzone";
 import Start from "./pages/Start/Start";
+import ImagePage from "./pages/ImagePage/ImagePage";
 
 const theme = createMuiTheme({
   palette: {
@@ -54,6 +55,22 @@ const App = () => {
 
                 if (item === false) return <Redirect to="/" />;
                 else return <Landing />;
+              }}
+            />
+            <Route
+              exact
+              path="/images"
+              render={props => {
+                let item;
+                if (localStorage.getItem("broLogin") == null) {
+                  item = false;
+                } else {
+                  item = JSON.parse(localStorage.getItem("broLogin"))
+                    .loginStatus;
+                }
+
+                if (item === false) return <Redirect to="/" />;
+                else return <ImagePage />;
               }}
             />
             <Route

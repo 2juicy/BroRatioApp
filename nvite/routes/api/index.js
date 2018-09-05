@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const userInfo= require("./userInfo");
+const userInfo = require("./userInfo");
 const imagePath = require("./imagePath");
 
 router.use("/userInfo", userInfo);

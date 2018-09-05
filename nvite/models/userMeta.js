@@ -1,18 +1,18 @@
 //Using Mongose
-var Mongoose = require("mongoose");
+const Mongoose = require("mongoose");
 
 //Schema Class gets imported
-var Schema = Mongoose.Schema;
+const Schema = Mongoose.Schema;
 
-var userMetaIn = new Schema({
-    img1 : { type:String} ,
-    img2 : { type:String} ,
-    img3 : { type:String} ,
-    img4 : { type:String} ,
-    img5 : { type:String} ,
-    imgHistory : {type:Array},
-})
+const userMetaIn = new Schema({
+  img1: { type: String },
+  img2: { type: String },
+  img3: { type: String },
+  img4: { type: String },
+  img5: { type: String },
+  imgHistory: { type: Array }
+});
 
-var UserMeta = Mongoose.model("userMeta",  userMetaIn);
+const UserMeta = Mongoose.model("userMeta", userMetaIn);
 
-module.exports =  UserMeta;
+module.exports = UserMeta;

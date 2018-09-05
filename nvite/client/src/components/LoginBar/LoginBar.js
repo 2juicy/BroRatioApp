@@ -48,6 +48,14 @@ class MenuAppBar extends React.Component {
     window.location.reload();
   }
 
+  imagePage() {
+    window.location.replace("/images");
+  }
+
+  cameraPage() {
+    window.location.replace("/landing");
+  }
+
   render() {
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
@@ -88,8 +96,8 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  <MenuItem onClick={this.imagePage}>Images</MenuItem>
+                  <MenuItem onClick={this.cameraPage}>Camera</MenuItem>
                   <MenuItem onClick={this.signOut}>Logout</MenuItem>
                 </Menu>
               </div>

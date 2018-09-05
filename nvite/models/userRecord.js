@@ -2,17 +2,16 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userRecordSchema = new Schema({
-  username: { type: String},
-  password: { type: String},
+  username: { type: String },
+  password: { type: String },
   date: { type: Date, default: Date.now },
-  userMetas:{
+  userMetas: {
     type: Schema.Types.ObjectId,
     ref: "userMeta"
-  }
-,
-profileImages:[]
+  },
+  profileImages: []
 });
 
-const UserRecord = mongoose.model("userRecord",userRecordSchema);
+const UserRecord = mongoose.model("userRecord", userRecordSchema);
 
 module.exports = UserRecord;

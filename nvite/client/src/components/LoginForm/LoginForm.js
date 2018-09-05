@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Input, InputAdornment, Button } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Visibility from "@material-ui/icons/Visibility";
-
+import axios from "axios";
 const styles = {
   width: "auto"
 };
@@ -12,7 +12,8 @@ export default class Login extends Component {
     super();
     this.state = {
       user: "",
-      password: ""
+      password: "",
+      message:""
     };
   }
 
@@ -31,18 +32,25 @@ export default class Login extends Component {
         user: "",
         password: ""
       });
-      //   axios.post('/user', {
-      //   user: 'Fred',
-      //   password: 'Flintstone'
-      // })
-      // .then(function (response) {
-      //   console.log(response);
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
+      axios
+      .post("./api/userInfo/loginUserPass", {
+        username: this.state.user,
+        password: this.state.password
+      }).then((resdata)=>{
+        console.log(resdata.data)
+       if(resdata.data.loginStatus == true){
+        localStorage.setItem("broLogin", JSON.stringify(resdata.data));
+        window.location.reload();
+       }
+       else{
+        this.setState({message:"Wrong Password or Username on your attempt......try again"});
+       }   
+      }).catch(()=>{
+        this.setState({message:"Wrong Password or Username on your attempt.......try again"});
+      })
     }
   };
+
 
   render() {
     return (
@@ -81,6 +89,7 @@ export default class Login extends Component {
             Submit
           </Button>
         </form>
+        <p className="message">{this.state.message}</p>
       </div>
     );
   }
